@@ -1,0 +1,6 @@
+---
+- name: Install Coturn
+  apt:
+    name: coturn
+    update_cache: yes
+    state: present
