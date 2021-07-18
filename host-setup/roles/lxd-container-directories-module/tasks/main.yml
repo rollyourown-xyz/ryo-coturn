@@ -1,0 +1,17 @@
+---
+## The generic directory /var/containers/{{ module_id }}
+## for LXD container persistent storage must be created
+## Further module-specific container directories should be
+## added here
+## -----------------------------------------------------------
+
+## Directories for module-specific LXD container persistent storage
+## -----------------------------------------------------------------
+
+- name: Create a directory to mount in module containers
+  file:
+    path: "/var/containers/{{ module_id }}"
+    state: directory
+    mode: '0755'
+
+### No further module directories

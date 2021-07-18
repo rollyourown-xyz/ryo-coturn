@@ -1,0 +1,9 @@
+#-----------------------
+# REQUIRED Configuration
+#-----------------------
+
+# Basic module configuration
+#---------------------------
+
+# Do not change this unless you know what you are doing 
+module_id: ryo-coturn
