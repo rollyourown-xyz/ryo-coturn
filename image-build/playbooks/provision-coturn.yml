@@ -1,0 +1,14 @@
+---
+- name: Provision Consul container image
+  hosts: packer
+
+  vars_files:
+    # Module configuration file
+    - "{{ playbook_dir }}/../../configuration/configuration.yml"
+
+  roles:
+    - role: upgrade-container
+    - role: install-iptables
+    - role: install-cron
+    - role: install-coturn
+    - role: set-up-coturn
