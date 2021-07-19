@@ -11,4 +11,9 @@
     - role: install-iptables
     - role: install-cron
     - role: install-coturn
+    - role: install-consul
+    - role: install-consul-template
+    - role: set-up-firewall
+    - role: set-up-consul
     - role: set-up-coturn
+    - role: set-up-consul-template
