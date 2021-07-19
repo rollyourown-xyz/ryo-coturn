@@ -1,0 +1,66 @@
+---
+
+# Create directory for consul-template configuration files
+#
+- name: Create directory for consul-template configuration files
+  file:
+    path: /etc/consul-template
+    state: directory
+    mode: 0755
+
+
+# Copy consul-template configuration file
+#
+- name: Copy consul-template configuration file
+  copy:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /etc/consul-template/consul-template-config.hcl
+    src: consul-template-config.hcl
+    force: yes
+
+
+# Copy consul-template template file for dynamic coturn configuration based on consul key-values
+#
+- name: Copy consul-template template file for dynamic coturn configuration
+  template:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /etc/consul-template/turnserver.conf.ctmpl
+    src: turnserver.conf.ctmpl.j2
+    force: yes
+
+
+# Copy consul-template template file for dynamic iptables configuration based on consul key-values
+#
+- name: Copy consul-template template file for dynamic iptables configuration
+  template:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /etc/consul-template/iptables-rules.ctmpl
+    src: iptables-rules.ctmpl.j2
+    force: yes
+
+
+# Copy consul-template service definition
+#
+- name: Copy consul-template service definition
+  copy:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /lib/systemd/system/consul-template.service
+    src: consul-template.service
+    force: yes
+
+
+# Enable consul-template service
+#
+- name: Enable consul-template service
+  service:
+    name: consul-template.service
+    enabled: yes
+    state: stopped

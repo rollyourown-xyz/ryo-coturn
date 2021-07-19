@@ -1,0 +1,19 @@
+[Unit]
+Description="consul-template service"
+Requires=network-online.target
+After=network-online.target consul.service
+ConditionFileNotEmpty=/etc/consul-template/consul-template-config.hcl
+
+[Service]
+Type=exec
+User=root
+Group=root
+ExecStart=/usr/local/bin/consul-template -config "/etc/consul-template/consul-template-config.hcl"
+ExecReload=/bin/kill --signal HUP $MAINPID
+KillMode=process
+KillSignal=SIGINT
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
