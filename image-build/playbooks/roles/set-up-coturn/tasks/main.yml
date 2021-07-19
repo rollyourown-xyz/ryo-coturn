@@ -1,0 +1,76 @@
+---
+
+# Create directory for turn SQLite Database
+#
+- name: Create coturn sqlite database directory
+  file:
+    mode: 0775
+    owner: turnserver
+    group: turnserver
+    path: /var/turn
+    state: directory
+
+
+# Generate a random string as coturn static auth secret
+- name: Generate a random string as coturn static auth secret
+  shell: "tr -dc A-Za-z0-9 </dev/urandom | head -c 12"
+  register: coturn_static_auth_secret
+
+
+# Write the coturn static auth secret to a file in the configuration directory (for later jitsi configuration)
+- name: Write the coturn static auth secret to a file in the configuration directory
+  template:
+    mode: 0640
+    owner: "{{ local_non_root_user }}"
+    group: "{{ local_non_root_user }}"
+    dest: "{{ playbook_dir }}/../../configuration/coturn_static_auth_secret_{{ host_id }}.yml"
+    src: coturn_static_auth_secret.yml.j2
+    force: yes
+    backup: yes
+
+
+# Copy initial coturn configuration file
+#
+- name: Copy initial coturn configuration file
+  template:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /etc/turnserver.conf
+    src: turnserver.conf.j2
+    force: yes
+
+
+# Set the turnserver to run as automatic system service daemon
+#
+- name: Set turnserver as automatic system service daemon
+  lineinfile:
+    dest: /etc/default/coturn
+    line: "TURNSERVER_ENABLED=1"
+    state: present
+
+
+# Create cron job to restart turn server daily at 4am (to pick up changed certs)
+#
+- name: Create cron to restart turn server
+  cron:
+    name: "coturn restart"
+    month: "*"
+    day: "*"
+    weekday: "*"
+    hour: "4"
+    minute: "0"
+    job: "systemctl restart coturn"
+    state: present
+
+
+# Copy coturn restart script
+#
+- name: Copy coturn restart script
+  copy:
+    mode: 0770
+    owner: root
+    group: root
+    dest: /usr/local/bin/restart-coturn.sh
+    src: restart-coturn.sh
+    force: yes
