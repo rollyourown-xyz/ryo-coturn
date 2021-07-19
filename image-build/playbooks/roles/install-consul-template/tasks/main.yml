@@ -1,0 +1,11 @@
+---
+# Download and unarchive consul-template archive (version {{ consul-template_version }})
+#
+- name: Download and unarchive consul-template v-{{ consul_template_version }}
+  unarchive:
+    owner: root
+    group: root
+    mode: 0755
+    src: https://releases.hashicorp.com/consul-template/{{ consul_template_version }}/consul-template_{{ consul_template_version }}_linux_amd64.zip
+    dest: /usr/local/bin
+    remote_src: yes
