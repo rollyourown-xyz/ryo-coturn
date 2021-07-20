@@ -19,6 +19,12 @@ variable "version" {
   type        = string
 }
 
+# Specify the consul-template version to use in the image build
+variable "consul_template_version" {
+  description = "Mandatory: The consul-template version to use in the image build."
+  type        = string
+}
+
 ## Local configuration variables
 ##
 
