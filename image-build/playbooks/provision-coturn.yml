@@ -3,6 +3,8 @@
   hosts: packer
 
   vars_files:
+    # Control node configuration file
+    - "{{ playbook_dir }}/../../../ryo-control-node/configuration/configuration.yml"
     # Module configuration file
     - "{{ playbook_dir }}/../../configuration/configuration.yml"
 
