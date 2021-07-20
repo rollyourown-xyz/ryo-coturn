@@ -10,8 +10,8 @@ helpMessage()
    echo "Usage: ./build-images.sh -n hostname -v version"
    echo "Flags:"
    echo -e "-n hostname \t\t(Mandatory) Name of the host for which to build images"
-   echo -e "-c consul_template_version \t(Optional) Override default consul-template version to use for the loadbalancer-tls-proxy image, e.g. 0.25.2 (default)"
    echo -e "-v version \t\t(Mandatory) Version stamp to apply to images, e.g. 20210101-1"
+   echo -e "-c consul_template_version \t(Optional) Override default consul-template version to use for the coturn image, e.g. 0.26.0 (default)"
    echo -e "-h \t\t\tPrint this help message"
    echo ""
    exit 1
