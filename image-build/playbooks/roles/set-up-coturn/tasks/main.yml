@@ -12,6 +12,7 @@
 
 
 # Check existence of a previously generated coturn static auth secret for the host
+#
 - name: Check existence of a previously generated coturn static auth secret for the host
   delegate_to: localhost
   stat:
@@ -20,6 +21,7 @@
 
 
 # Load the coturn static auth secret from previously created file (if previously generated)
+#
 - name: Load the coturn static auth secret from previously created file
   include_vars:
     file: "{{ playbook_dir }}/../../configuration/coturn_static_auth_secret_{{ host_id }}.yml"
@@ -27,6 +29,7 @@
 
 
 # Generate a random string as coturn static auth secret (if not previously generated)
+#
 - name: Generate a random string as coturn static auth secret
   shell: "tr -dc A-Za-z0-9 </dev/urandom | head -c 12"
   register: coturn_static_auth_secret_stdout
@@ -34,6 +37,7 @@
 
 
 # Assign the coturn static auth secret to the variable coturn_static_auth_secret (if not previously generated)
+#
 - name: Assign the coturn static auth secret to the variable coturn_static_auth_secret
   set_fact:
     coturn_static_auth_secret: "{{ coturn_static_auth_secret_stdout.stdout }}"
@@ -41,6 +45,7 @@
 
 
 # Write the coturn static auth secret to a file in the module configuration directory on the local machine (if not previously generated)
+#
 - name: Write the coturn static auth secret to a file in the module configuration directory
   delegate_to: localhost
   template:
