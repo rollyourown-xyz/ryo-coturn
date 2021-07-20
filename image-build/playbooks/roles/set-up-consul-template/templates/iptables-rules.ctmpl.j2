@@ -43,18 +43,18 @@ $IPT -A INPUT -p tcp -m tcp --dport 8301 -j ACCEPT
 ###############
 
 # Allow coturn UDP and TCP listener port 3478
-{{'{{'}} if keyExists "service/coturn/{{ host_id }}/{{ project_domain_name }}/listening-port" {{'}}'}}
-$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/{{ host_id }}/{{ project_domain_name }}/listening-port" {{'}}'}} -j ACCEPT
-$IPT -A INPUT -p tcp -m tcp --dport {{'{{'}} key "service/coturn/{{ host_id }}/{{ project_domain_name }}/listening-port" {{'}}'}} -j ACCEPT
+{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/listening-port" {{'}}'}}
+$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/{{ project_domain_name }}/listening-port" {{'}}'}} -j ACCEPT
+$IPT -A INPUT -p tcp -m tcp --dport {{'{{'}} key "service/coturn/{{ project_domain_name }}/listening-port" {{'}}'}} -j ACCEPT
 {{'{{'}} end {{'}}'}}
-{{'{{'}} if keyExists "service/coturn/{{ host_id }}/{{ project_domain_name }}/tls-listening-port" {{'}}'}}
-$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/{{ host_id }}/{{ project_domain_name }}/tls-listening-port" {{'}}'}} -j ACCEPT
-$IPT -A INPUT -p tcp -m tcp --dport {{'{{'}} key "service/coturn/{{ host_id }}/{{ project_domain_name }}/tls-listening-port" {{'}}'}} -j ACCEPT
+{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/tls-listening-port" {{'}}'}}
+$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/{{ project_domain_name }}/tls-listening-port" {{'}}'}} -j ACCEPT
+$IPT -A INPUT -p tcp -m tcp --dport {{'{{'}} key "service/coturn/{{ project_domain_name }}/tls-listening-port" {{'}}'}} -j ACCEPT
 {{'{{'}} end {{'}}'}}
 
 # Allow coturn UDP relay port range 50000-51000
-{{'{{'}} if keyExists "service/coturn/{{ host_id }}/{{ project_domain_name }}/min-port" {{'}}'}}
-{{'{{'}} if keyExists "service/coturn/{{ host_id }}/{{ project_domain_name }}/max-port" {{'}}'}}
-$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/{{ host_id }}/{{ project_domain_name }}/min-port" {{'}}'}}:{{'{{'}} key "service/coturn/{{ host_id }}/{{ project_domain_name }}/max-port" {{'}}'}} -j ACCEPT
+{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/min-port" {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/max-port" {{'}}'}}
+$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/{{ project_domain_name }}/min-port" {{'}}'}}:{{'{{'}} key "service/coturn/{{ project_domain_name }}/max-port" {{'}}'}} -j ACCEPT
 {{'{{'}} end {{'}}'}}
 {{'{{'}} end {{'}}'}}
