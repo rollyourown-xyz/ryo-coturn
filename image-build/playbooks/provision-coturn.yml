@@ -12,6 +12,7 @@
     - role: install-cron
     - role: install-coturn
     - role: install-consul
+    - role: install-unzip
     - role: install-consul-template
     - role: set-up-firewall
     - role: set-up-consul
