@@ -11,14 +11,38 @@
     state: directory
 
 
-# Generate a random string as coturn static auth secret
+# Check existence of a previously generated coturn static auth secret for the host
+- name: Check existence of a previously generated coturn static auth secret for the host
+  delegate_to: localhost
+  stat:
+    path: "{{ playbook_dir }}/../../configuration/coturn_static_auth_secret_{{ host_id }}.yml"
+  register: coturn_static_auth_secret_file
+
+
+# Read the coturn static auth secret from previously created file (if previously generated)
+- name: Read the coturn static auth secret from previously created file
+  vars_files:
+    - "{{ playbook_dir }}/../../configuration/coturn_static_auth_secret_{{ host_id }}.yml"
+  when: coturn_static_auth_secret_file.stat.exists
+
+
+# Generate a random string as coturn static auth secret (if not previously generated)
 - name: Generate a random string as coturn static auth secret
   shell: "tr -dc A-Za-z0-9 </dev/urandom | head -c 12"
-  register: coturn_static_auth_secret
+  register: coturn_static_auth_secret_stdout
+  when: not coturn_static_auth_secret_file.stat.exists
 
 
-# Write the coturn static auth secret to a file in the configuration directory (for later jitsi configuration)
-- name: Write the coturn static auth secret to a file in the configuration directory
+# Assign the coturn static auth secret to the variable coturn_static_auth_secret (if not previously generated)
+- name: Assign the coturn static auth secret to the variable coturn_static_auth_secret
+  set_fact:
+    coturn_static_auth_secret: "{{ coturn_static_auth_secret_stdout.stdout }}"
+  when: not coturn_static_auth_secret_file.stat.exists
+
+
+# Write the coturn static auth secret to a file in the module configuration directory on the local machine (if not previously generated)
+- name: Write the coturn static auth secret to a file in the module configuration directory
+  delegate_to: localhost
   template:
     mode: 0640
     owner: "{{ local_non_root_user }}"
@@ -27,6 +51,7 @@
     src: coturn_static_auth_secret.yml.j2
     force: yes
     backup: yes
+  when: not coturn_static_auth_secret_file.stat.exists
 
 
 # Copy initial coturn configuration file

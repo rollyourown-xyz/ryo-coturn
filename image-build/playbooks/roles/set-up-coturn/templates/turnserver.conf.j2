@@ -4,7 +4,7 @@ min-port=50000
 max-port=51000
 lt-cred-mech
 use-auth-secret
-static-auth-secret={{ coturn_static_auth_secret.stdout }}
+static-auth-secret={{ coturn_static_auth_secret }}
 realm=turn.{{ project_domain_name }} 
 no-tcp-relay
 cert=/etc/turn/tls/ryo.cert.pem
