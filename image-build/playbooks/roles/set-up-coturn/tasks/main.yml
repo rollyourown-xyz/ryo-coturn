@@ -19,10 +19,10 @@
   register: coturn_static_auth_secret_file
 
 
-# Read the coturn static auth secret from previously created file (if previously generated)
-- name: Read the coturn static auth secret from previously created file
-  vars_files:
-    - "{{ playbook_dir }}/../../configuration/coturn_static_auth_secret_{{ host_id }}.yml"
+# Load the coturn static auth secret from previously created file (if previously generated)
+- name: Load the coturn static auth secret from previously created file
+  include_vars:
+    file: "{{ playbook_dir }}/../../configuration/coturn_static_auth_secret_{{ host_id }}.yml"
   when: coturn_static_auth_secret_file.stat.exists
 
 
