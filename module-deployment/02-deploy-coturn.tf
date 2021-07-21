@@ -21,68 +21,68 @@ resource "lxd_container" "coturn" {
     properties = {
       name           = "eth0"
       network        = var.host_id
-      "ipv4.address" = join(".", [ local.lxd_host_network_part, "20" ])
+      "ipv4.address" = join(".", [ local.lxd_host_network_part, var.ip_addr_host_part ])
     }
   }
   
   ## Add proxy devices for the module
 
-  ### UDP Port 3478
+  ### UDP TURN listener port
   device {
     name = "proxy0"
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":3478" ] )
-      connect = join("", [ "udp:", local.lxd_host_network_part, ".20", ":3478" ] )
+      listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":", var.listening_port ] )
+      connect = join("", [ "udp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.listening_port ] )
       nat     = "yes"
     }
   }
 
-  ### TCP Port 3478
+  ### TCP TURN listener port
   device {
     name = "proxy1"
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":3478" ] )
-      connect = join("", [ "tcp:", local.lxd_host_network_part, ".20", ":3478" ] )
+      listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":", var.listening_port ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.listening_port ] )
       nat     = "yes"
     }
   }
 
-  ### UDP Port 5349
+  ### DTLS TURN listener port
   device {
     name = "proxy2"
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":5349" ] )
-      connect = join("", [ "udp:", local.lxd_host_network_part, ".20", ":5349" ] )
+      listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":", var.tls_listening_port ] )
+      connect = join("", [ "udp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.tls_listening_port ] )
       nat     = "yes"
     }
   }
 
-  ### TCP Port 5349
+  ### TLS PTURN listener port
   device {
     name = "proxy3"
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":5349" ] )
-      connect = join("", [ "tcp:", local.lxd_host_network_part, ".20", ":5349" ] )
+      listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":", var.tls_listening_port ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.tls_listening_port ] )
       nat     = "yes"
     }
   }
 
-  ### UDP Ports 50000-51000
+  ### UDP Relay Ports
   device {
     name = "proxy4"
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":50000-51000" ] )
-      connect = join("", [ "udp:", local.lxd_host_network_part, ".20", ":50000-51000" ] )
+      listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":", var.min_port, "-", var.max_port ] )
+      connect = join("", [ "udp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.min_port, "-", var.max_port ] )
       nat     = "yes"
     }
   }
@@ -101,3 +101,16 @@ resource "lxd_container" "coturn" {
   }
 }
 
+### Deploy consul KVs for coturn ports configuration
+
+module "deploy-coturn-ports-configuration" {
+  source = "modules/deploy-coturn-ports-configuration"
+
+  depends_on = [ lxd_container.coturn ]
+
+  coturn_ip_addr_host_part  = var.ip_addr_host_part
+  coturn_listening_port     = var.listening_port
+  coturn_tls_listening_port = var.tls_listening_port
+  coturn_min_port           = var.min_port
+  coturn_max_port           = var.max_port
+}

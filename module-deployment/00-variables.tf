@@ -11,6 +11,37 @@ variable "image_version" {
   type        = string
 }
 
+variable "listening_port" {
+  description = "TURN listener port for UDP and TCP."
+  type = number
+  default = 3478
+}
+
+variable "tls_listening_port" {
+  description = "TURN listener port for TLS and DTLS."
+  type = number
+  default = 5349
+}
+
+variable "ip_addr_host_part" {
+  description = "Host part of the IP address of the coturn container."
+  type = number
+  default = 20
+}
+
+variable "min_port" {
+  description = "Lower bound of the coturn TURN server UDP relay endpoints."
+  type = number
+  default = 50000
+}
+
+variable "max_port" {
+  description = "Upper bound of the coturn TURN server UDP relay endpoints."
+  type = number
+  default = 51000
+}
+
+
 # Local variables
 #################
 
