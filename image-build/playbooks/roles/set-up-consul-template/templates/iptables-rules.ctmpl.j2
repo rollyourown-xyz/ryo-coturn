@@ -43,18 +43,12 @@ $IPT -A INPUT -p tcp -m tcp --dport 8301 -j ACCEPT
 ###############
 
 # Allow coturn UDP and TCP listener port 3478
-{{'{{'}} if keyExists "service/coturn/{{ host_id }}/listening-port" {{'}}'}}
-$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/{{ host_id }}/listening-port" {{'}}'}} -j ACCEPT
-$IPT -A INPUT -p tcp -m tcp --dport {{'{{'}} key "service/coturn/{{ host_id }}/listening-port" {{'}}'}} -j ACCEPT
-{{'{{'}} end {{'}}'}}
-{{'{{'}} if keyExists "service/coturn/{{ host_id }}/tls-listening-port" {{'}}'}}
-$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/{{ host_id }}/tls-listening-port" {{'}}'}} -j ACCEPT
-$IPT -A INPUT -p tcp -m tcp --dport {{'{{'}} key "service/coturn/{{ host_id }}/tls-listening-port" {{'}}'}} -j ACCEPT
-{{'{{'}} end {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/listening-port" {{'}}'}}
+$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/listening-port" {{'}}'}} -j ACCEPT
+$IPT -A INPUT -p tcp -m tcp --dport {{'{{'}} key "service/coturn/listening-port" {{'}}'}} -j ACCEPT{{'{{'}} end {{'}}'}}{{'{{'}} if keyExists "service/coturn/tls-listening-port" {{'}}'}}
+$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/tls-listening-port" {{'}}'}} -j ACCEPT
+$IPT -A INPUT -p tcp -m tcp --dport {{'{{'}} key "service/coturn/tls-listening-port" {{'}}'}} -j ACCEPT{{'{{'}} end {{'}}'}}
 
 # Allow coturn UDP relay port range 50000-51000
-{{'{{'}} if keyExists "service/coturn/{{ host_id }}/min-port" {{'}}'}}
-{{'{{'}} if keyExists "service/coturn/{{ host_id }}/max-port" {{'}}'}}
-$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/{{ host_id }}/min-port" {{'}}'}}:{{'{{'}} key "service/coturn/{{ host_id }}/max-port" {{'}}'}} -j ACCEPT
-{{'{{'}} end {{'}}'}}
-{{'{{'}} end {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/min-port" {{'}}'}}{{'{{'}} if keyExists "service/coturn/max-port" {{'}}'}}
+$IPT -A INPUT -p udp -m udp --dport {{'{{'}} key "service/coturn/min-port" {{'}}'}}:{{'{{'}} key "service/coturn/max-port" {{'}}'}} -j ACCEPT{{'{{'}} end {{'}}'}}{{'{{'}} end {{'}}'}}
