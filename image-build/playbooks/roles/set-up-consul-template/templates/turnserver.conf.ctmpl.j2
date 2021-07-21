@@ -4,10 +4,10 @@ listening-port=3478{{'{{'}} end {{'}}'}}
 {{'{{'}} if keyExists "service/coturn/tls-listening-port" {{'}}'}}
 tls-listening-port={{'{{'}} key "service/coturn/tls-listening-port" {{'}}'}}{{'{{'}} else {{'}}'}}
 tls-listening-port=5349{{'{{'}} end {{'}}'}}
-{{'{{'}} if keyExists "service/coturn/ip-addr-host" {{'}}'}}
-listening-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/ip-addr-host" {{'}}'}}{{'{{'}} end {{'}}'}}
-{{'{{'}} if keyExists "service/coturn/ip-addr-host" {{'}}'}}
-relay-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/ip-addr-host" {{'}}'}}{{'{{'}} end {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/ip-addr-host-part" {{'}}'}}
+listening-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/ip-addr-host-part" {{'}}'}}{{'{{'}} end {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/ip-addr-host-part" {{'}}'}}
+relay-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/ip-addr-host-part" {{'}}'}}{{'{{'}} end {{'}}'}}
 
 external-ip={{ host_public_ip }}
 {{'{{'}} if keyExists "service/coturn/min-port" {{'}}'}}
@@ -42,8 +42,8 @@ denied-peer-ip=10.0.0.0-10.255.255.255
 denied-peer-ip=192.168.0.0-192.168.255.255
 
 denied-peer-ip=172.16.0.0-172.31.255.255
-{{'{{'}} if keyExists "service/coturn/ip-addr-host" {{'}}'}}
-allowed-peer-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/ip-addr-host" {{'}}'}}{{'{{'}} end {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/ip-addr-host-part" {{'}}'}}
+allowed-peer-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/ip-addr-host-part" {{'}}'}}{{'{{'}} end {{'}}'}}
 
 user-quota=0
 
