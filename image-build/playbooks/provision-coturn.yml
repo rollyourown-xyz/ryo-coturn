@@ -3,9 +3,11 @@
   hosts: packer
 
   vars_files:
-    # Control node configuration file
+    # Control node configuration
     - "{{ playbook_dir }}/../../../ryo-control-node/configuration/configuration.yml"
-    # Module configuration file
+    # Host configuration
+    - "{{ playbook_dir }}/../../../ryo-host/configuration/configuration_{{ host_id }}.yml"
+    # Module configuration
     - "{{ playbook_dir }}/../../configuration/configuration.yml"
 
   roles:
