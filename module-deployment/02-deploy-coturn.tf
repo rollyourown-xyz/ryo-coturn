@@ -104,7 +104,7 @@ resource "lxd_container" "coturn" {
 ### Deploy consul KVs for coturn ports configuration
 
 module "deploy-coturn-ports-configuration" {
-  source = "modules/deploy-coturn-ports-configuration"
+  source = "./modules/deploy-coturn-ports-configuration"
 
   depends_on = [ lxd_container.coturn ]
 
