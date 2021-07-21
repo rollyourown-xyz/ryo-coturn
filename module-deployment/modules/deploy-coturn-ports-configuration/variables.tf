@@ -3,7 +3,6 @@
 variable "coturn_ip_addr_host_part" {
   description = "Host part of the IP address of the coturn container."
   type = number
-  default = {}
 }
 
 variable "coturn_listening_port" {

@@ -11,6 +11,12 @@ variable "image_version" {
   type        = string
 }
 
+variable "ip_addr_host_part" {
+  description = "Host part of the IP address of the coturn container."
+  type = number
+  default = 20
+}
+
 variable "listening_port" {
   description = "TURN listener port for UDP and TCP."
   type = number
@@ -21,12 +27,6 @@ variable "tls_listening_port" {
   description = "TURN listener port for TLS and DTLS."
   type = number
   default = 5349
-}
-
-variable "ip_addr_host_part" {
-  description = "Host part of the IP address of the coturn container."
-  type = number
-  default = 20
 }
 
 variable "min_port" {
