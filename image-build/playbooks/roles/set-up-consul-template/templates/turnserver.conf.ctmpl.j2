@@ -1,33 +1,33 @@
-{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/listening-port" {{'}}'}}
-listening-port={{'{{'}} key "service/coturn/{{ project_domain_name }}/listening-port" {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/{{ host_id }}/listening-port" {{'}}'}}
+listening-port={{'{{'}} key "service/coturn/{{ host_id }}/listening-port" {{'}}'}}
 {{'{{'}} else {{'}}'}}
 listening-port=3478
 {{'{{'}} end {{'}}'}}
 
-{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/tls-listening-port" {{'}}'}}
-tls-listening-port={{'{{'}} key "service/coturn/{{ project_domain_name }}/tls-listening-port" {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/{{ host_id }}/tls-listening-port" {{'}}'}}
+tls-listening-port={{'{{'}} key "service/coturn/{{ host_id }}/tls-listening-port" {{'}}'}}
 {{'{{'}} else {{'}}'}}
 tls-listening-port=5349
 {{'{{'}} end {{'}}'}}
 
-{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/ip_addr_host" {{'}}'}}
-listening-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/{{ project_domain_name }}/ip_addr_host" {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/{{ host_id }}/ip-addr-host" {{'}}'}}
+listening-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/{{ host_id }}/ip-addr-host" {{'}}'}}
 {{'{{'}} end {{'}}'}}
 
-{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/ip_addr_host" {{'}}'}}
-relay-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/{{ project_domain_name }}/ip_addr_host" {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/{{ host_id }}/ip-addr-host" {{'}}'}}
+relay-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/{{ host_id }}/ip-addr-host" {{'}}'}}
 {{'{{'}} end {{'}}'}}
 
 external-ip={{ host_public_ip }}
 
-{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/min-port" {{'}}'}}
-min-port={{'{{'}} key "service/coturn/{{ project_domain_name }}/min-port" {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/{{ host_id }}/min-port" {{'}}'}}
+min-port={{'{{'}} key "service/coturn/{{ host_id }}/min-port" {{'}}'}}
 {{'{{'}} else {{'}}'}}
 min-port=50000
 {{'{{'}} end {{'}}'}}
 
-{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/max-port" {{'}}'}}
-max-port={{'{{'}} key "service/coturn/{{ project_domain_name }}/max-port" {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/{{ host_id }}/max-port" {{'}}'}}
+max-port={{'{{'}} key "service/coturn/{{ host_id }}/max-port" {{'}}'}}
 {{'{{'}} else {{'}}'}}
 max-port=51000
 {{'{{'}} end {{'}}'}}
@@ -35,18 +35,22 @@ max-port=51000
 lt-cred-mech
 use-auth-secret
 static-auth-secret={{ coturn_static_auth_secret }}
-realm=turn.{{ project_domain_name }} 
+
+{{'{{'}} if keyExists "service/coturn/{{ host_id }}/turn-domain" {{'}}'}}
+realm={{'{{'}} key "service/coturn/{{ host_id }}/turn-domain" {{'}}'}}
+{{'{{'}} end {{'}}'}}
+
 no-tcp-relay
-cert=/etc/turn/tls/{{ project_domain_name }}.cert.pem
-pkey=/etc/turn/tls/{{ project_domain_name }}.key.pem
+cert=/etc/turn/tls/{{ host_id }}.cert.pem
+pkey=/etc/turn/tls/{{ host_id }}.key.pem
 no-loopback-peers
 no-multicast-peers
 denied-peer-ip=10.0.0.0-10.255.255.255
 denied-peer-ip=192.168.0.0-192.168.255.255
 denied-peer-ip=172.16.0.0-172.31.255.255
 
-{{'{{'}} if keyExists "service/coturn/{{ project_domain_name }}/ip_addr_host" {{'}}'}}
-allowed-peer-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/{{ project_domain_name }}/ip_addr_host" {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/{{ host_id }}/ip-addr-host" {{'}}'}}
+allowed-peer-ip={{ lxd_host_network_part }}.{{'{{'}} key "service/coturn/{{ host_id }}/ip-addr-host" {{'}}'}}
 {{'{{'}} end {{'}}'}}
 
 user-quota=0
