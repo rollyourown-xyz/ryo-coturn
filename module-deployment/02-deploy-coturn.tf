@@ -1,6 +1,20 @@
 # Deploy Coturn for rollyourown.xyz projects
 ############################################
 
+### Deploy consul KVs for coturn ports configuration
+
+module "deploy-coturn-ports-configuration" {
+  source = "./modules/deploy-coturn-ports-configuration"
+
+  coturn_ip_addr_host_part  = var.ip_addr_host_part
+  coturn_listening_port     = var.listening_port
+  coturn_tls_listening_port = var.tls_listening_port
+  coturn_min_port           = var.min_port
+  coturn_max_port           = var.max_port
+}
+
+
+### Depoy coturn container
 resource "lxd_container" "coturn" {
 
   remote     = var.host_id
@@ -99,18 +113,4 @@ resource "lxd_container" "coturn" {
       shift    = "true"
     }
   }
-}
-
-### Deploy consul KVs for coturn ports configuration
-
-module "deploy-coturn-ports-configuration" {
-  source = "./modules/deploy-coturn-ports-configuration"
-
-  depends_on = [ lxd_container.coturn ]
-
-  coturn_ip_addr_host_part  = var.ip_addr_host_part
-  coturn_listening_port     = var.listening_port
-  coturn_tls_listening_port = var.tls_listening_port
-  coturn_min_port           = var.min_port
-  coturn_max_port           = var.max_port
 }
