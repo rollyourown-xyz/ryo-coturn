@@ -36,7 +36,7 @@ then
    errorMessage
 fi
 
-# Module-specific host setup for ryo-loadbalancer-tls-proxy
+# Module-specific host setup for ryo-coturn
 if [ -f ""$SCRIPT_DIR"/configuration/"$hostname"_playbooks_executed" ]
 then
    echo "Host setup for ryo-coturn module has already been done on "$hostname""
