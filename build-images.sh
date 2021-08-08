@@ -20,7 +20,7 @@ helpMessage()
 errorMessage()
 {
    echo "Invalid option or mandatory input variable is missing"
-   echo "Use \"./host-setup.sh -h\" for help"
+   echo "Use \"./build-images.sh -h\" for help"
    exit 1
 }
 
