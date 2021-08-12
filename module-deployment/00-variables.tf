@@ -11,12 +11,6 @@ variable "image_version" {
   type        = string
 }
 
-variable "ip_addr_host_part" {
-  description = "Host part of the IP address of the coturn container."
-  type = number
-  default = 20
-}
-
 variable "listening_port" {
   description = "TURN listener port for UDP and TCP."
   type = number
@@ -53,7 +47,8 @@ locals {
 
 # Basic module variables
 locals {
-  module_id  = yamldecode(file(local.module_configuration))["module_id"]
+  module_id                = yamldecode(file(local.module_configuration))["module_id"]
+  coturn_ip_addr_host_part = yamldecode(file(local.module_configuration))["coturn_ip_addr_host_part"]
 }
 
 # LXD variables

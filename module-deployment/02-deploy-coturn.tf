@@ -6,7 +6,7 @@
 module "deploy-coturn-ports-configuration" {
   source = "./modules/deploy-coturn-ports-configuration"
 
-  coturn_ip_addr_host_part  = var.ip_addr_host_part
+  coturn_ip_addr_host_part  = local.coturn_ip_addr_host_part
   coturn_listening_port     = var.listening_port
   coturn_tls_listening_port = var.tls_listening_port
   coturn_min_port           = var.min_port
@@ -35,7 +35,7 @@ resource "lxd_container" "coturn" {
     properties = {
       name           = "eth0"
       network        = var.host_id
-      "ipv4.address" = join(".", [ local.lxd_host_network_part, var.ip_addr_host_part ])
+      "ipv4.address" = join(".", [ local.lxd_host_network_part, local.coturn_ip_addr_host_part ])
     }
   }
   
@@ -48,7 +48,7 @@ resource "lxd_container" "coturn" {
 
     properties = {
       listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":", var.listening_port ] )
-      connect = join("", [ "udp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.listening_port ] )
+      connect = join("", [ "udp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.listening_port ] )
       nat     = "yes"
     }
   }
@@ -60,7 +60,7 @@ resource "lxd_container" "coturn" {
 
     properties = {
       listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":", var.listening_port ] )
-      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.listening_port ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.listening_port ] )
       nat     = "yes"
     }
   }
@@ -72,7 +72,7 @@ resource "lxd_container" "coturn" {
 
     properties = {
       listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":", var.tls_listening_port ] )
-      connect = join("", [ "udp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.tls_listening_port ] )
+      connect = join("", [ "udp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.tls_listening_port ] )
       nat     = "yes"
     }
   }
@@ -84,7 +84,7 @@ resource "lxd_container" "coturn" {
 
     properties = {
       listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":", var.tls_listening_port ] )
-      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.tls_listening_port ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.tls_listening_port ] )
       nat     = "yes"
     }
   }
@@ -96,7 +96,7 @@ resource "lxd_container" "coturn" {
 
     properties = {
       listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":", var.min_port, "-", var.max_port ] )
-      connect = join("", [ "udp:", local.lxd_host_network_part, ".", var.ip_addr_host_part, ":", var.min_port, "-", var.max_port ] )
+      connect = join("", [ "udp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.min_port, "-", var.max_port ] )
       nat     = "yes"
     }
   }

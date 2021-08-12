@@ -5,5 +5,6 @@
 # Basic module configuration
 #---------------------------
 
-# Do not change this unless you know what you are doing 
+# Do not change these values unless you know what you are doing 
 module_id: ryo-coturn
+coturn_ip_addr_host_part: 13
