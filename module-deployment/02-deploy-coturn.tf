@@ -18,7 +18,7 @@ module "deploy-coturn-ports-configuration" {
 resource "lxd_container" "coturn" {
 
   remote     = var.host_id
-  name       = join("-", [ var.host_id, local.module_id, "coturn" ])
+  name       = "coturn"
   image      = join("-", [ local.module_id, "coturn", var.image_version ])
   profiles   = ["default"]
   
