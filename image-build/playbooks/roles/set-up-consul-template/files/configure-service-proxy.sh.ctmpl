@@ -4,4 +4,4 @@
 {{ $coturn_domain :=  ( key "service/coturn/coturn-domain" ) }}{{ $certbot_kv_path :=  (print "service/certbot/" $coturn_domain) }}
 {{ if keyExists ( print $certbot_kv_path ) }}# Nothing to do, {{ print $certbot_kv_path }} already exists
 {{ else }}consul kv put service/certbot/{{ key "service/coturn/coturn-domain" }} {{ key "service/coturn/coturn-domain-admin-email" }}
-{{ end }}{{ end }}
+{{ end }}{{ end }}{{ end }}
