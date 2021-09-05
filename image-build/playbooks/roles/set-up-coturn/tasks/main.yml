@@ -104,3 +104,15 @@
     dest: /usr/local/bin/restart-coturn.sh
     src: restart-coturn.sh
     force: yes
+
+
+# Copy coturn-services consul service configuration file
+#
+- name: Copy coturn-services consul service configuration file
+  copy:
+    mode: 0640
+    owner: consul
+    group: consul
+    dest: /etc/consul.d/coturn-services.hcl
+    src: coturn-services.hcl
+    force: yes
