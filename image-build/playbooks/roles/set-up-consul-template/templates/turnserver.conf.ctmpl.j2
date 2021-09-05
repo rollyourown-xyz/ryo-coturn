@@ -22,15 +22,15 @@ lt-cred-mech
 use-auth-secret
 
 static-auth-secret={{ coturn_static_auth_secret }}
-{{'{{'}} if keyExists "service/coturn/turn-domain" {{'}}'}}
-realm={{'{{'}} key "service/coturn/turn-domain" {{'}}'}}{{'{{'}} end {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/coturn-domain" {{'}}'}}
+realm={{'{{'}} key "service/coturn/coturn-domain" {{'}}'}}{{'{{'}} end {{'}}'}}
 
 no-tcp-relay
-{{'{{'}} if keyExists "service/coturn/turn-domain" {{'}}'}}
-cert=/etc/turn/tls/{{'{{'}} key "service/coturn/turn-domain" {{'}}'}}.cert.pem{{'{{'}} else {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/coturn-domain" {{'}}'}}
+cert=/etc/turn/tls/{{'{{'}} key "service/coturn/coturn-domain" {{'}}'}}.cert.pem{{'{{'}} else {{'}}'}}
 cert=/etc/turn/tls/ryo.cert.pem{{'{{'}} end {{'}}'}}
-{{'{{'}} if keyExists "service/coturn/turn-domain" {{'}}'}}
-pkey=/etc/turn/tls/{{'{{'}} key "service/coturn/turn-domain" {{'}}'}}.key.pem{{'{{'}} else {{'}}'}}
+{{'{{'}} if keyExists "service/coturn/coturn-domain" {{'}}'}}
+pkey=/etc/turn/tls/{{'{{'}} key "service/coturn/coturn-domain" {{'}}'}}.key.pem{{'{{'}} else {{'}}'}}
 pkey=/etc/turn/tls/ryo.key.pem{{'{{'}} end {{'}}'}}
 
 no-loopback-peers

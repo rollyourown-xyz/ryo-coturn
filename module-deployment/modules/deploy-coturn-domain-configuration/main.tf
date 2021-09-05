@@ -8,11 +8,20 @@ terraform {
   }
 }
 
-resource "consul_keys" "turn_domain" {
+resource "consul_keys" "coturn_domain" {
 
   key {
-    path   = "service/coturn/turn-domain"
+    path   = "service/coturn/coturn-domain"
     value  = var.coturn_domain
+    delete = true
+  }
+}
+
+resource "consul_keys" "coturn_domain_admin_email" {
+
+  key {
+    path   = "service/coturn/coturn-domain-admin-email"
+    value  = var.coturn_domain_admin_email
     delete = true
   }
 }

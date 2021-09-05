@@ -1,0 +1,7 @@
+#!/bin/sh
+{{ if keyExists "service/coturn/coturn-domain" }}{{ if keyExists "service/coturn/coturn-domain-admin-email" }}
+# Set certbot KV configuration for coturn domain if not already set
+{{ $coturn_domain :=  ( key "service/coturn/coturn-domain" ) }}{{ $certbot_kv_path :=  (print "service/certbot/" $coturn_domain) }}
+{{ if keyExists ( print $certbot_kv_path ) }}# Nothing to do, {{ print $certbot_kv_path }} already exists
+{{ else }}consul kv put service/certbot/{{ key "service/coturn/coturn-domain" }} {{ key "service/coturn/coturn-domain-admin-email" }}
+{{ end }}{{ end }}

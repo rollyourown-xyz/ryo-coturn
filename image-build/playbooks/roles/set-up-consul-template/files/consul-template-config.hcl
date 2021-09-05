@@ -26,3 +26,10 @@ template {
   destination = "/usr/local/bin/iptables-rules.sh"
   command = "/usr/local/bin/iptables-rules.sh"
 }
+
+# Template for provisioning ryo-service-proxy for coturn
+template {
+  source = "/etc/consul-template/configure-service-proxy.sh.ctmpl"
+  destination = "/usr/local/bin/configure-service-proxy.sh"
+  command = "/usr/local/bin/execute-configure-service-proxy.sh"
+}
