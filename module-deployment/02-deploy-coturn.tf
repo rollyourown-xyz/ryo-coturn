@@ -77,7 +77,7 @@ resource "lxd_container" "coturn" {
     }
   }
 
-  ### TLS PTURN listener port
+  ### TLS TURN listener port
   device {
     name = "proxy3"
     type = "proxy"
