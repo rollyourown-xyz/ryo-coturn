@@ -46,8 +46,7 @@ locals {
   build_image_os      = "ubuntu-minimal"
   build_image_release = "focal"
   
-  build_container_name        = "packer-lxd-build"
-  build_container_name_remote = "${ join(":", [ local.remote_lxd_host, "packer-lxd-build" ]) }"
+  build_container_name = "packer-lxd-build"
 
   build_inventory_file = "${abspath(path.root)}/playbooks/inventory.yml"
   build_playbook_file  = "${abspath(path.root)}/playbooks/provision-coturn.yml"
@@ -57,10 +56,9 @@ locals {
 ## Computed local variables
 ##
 
-# Parameters for the output image
+# Computed parameters for the output image
 locals {
   output_image_name        = "${ join("-", [ local.module_id, local.service_name, var.version ]) }"
-  output_image_name_remote = "${ join(":", [ local.remote_lxd_host, local.output_image_name ]) }"
   output_image_description = "${ join(" ", [ 
       join(":", [ local.build_image_os , local.build_image_release ]),
       "image for",
@@ -76,8 +74,8 @@ locals {
 
 source "lxd" "container" {
   image          = join(":", [ local.build_image_os , local.build_image_release ])
-  container_name = local.build_container_name_remote
-  output_image   = local.output_image_name_remote
+  container_name = local.build_container_name
+  output_image   = local.output_image_name
 
   publish_properties = {
     description = local.output_image_description
@@ -95,27 +93,27 @@ build {
     extra_arguments = [ "--extra-vars", local.build_extra_vars ]
   }
   
-  # post-processors {
+  post-processors {
 
-  #   # Copy image to remote LXD host
-  #   post-processor "shell-local" {
-  #     inline = [
-  #       "echo \"Copying image ${local.output_image_name} to remote host ${local.remote_lxd_host}\"", 
-  #       "echo \"This may take some time\"",
-  #       "lxc image copy ${local.output_image_name} ${local.remote_lxd_host}: --copy-aliases",
-  #       "echo \"Image copying completed\"",
-  #     ]
-  #     keep_input_artifact = true
-  #   }
+    # Copy image to remote LXD host
+    post-processor "shell-local" {
+      inline = [
+        "echo \"Copying image ${local.output_image_name} to remote host ${local.remote_lxd_host}\"", 
+        "echo \"This may take some time\"",
+        "lxc image copy ${local.output_image_name} ${local.remote_lxd_host}: --copy-aliases",
+        "echo \"Image copying completed\"",
+      ]
+      keep_input_artifact = true
+    }
 
-  #   # Post processor for removing image from local machine after copying to remote host
-  #   post-processor "shell-local" {
-  #     inline = [
-  #       "echo \"Deleting local image ${local.output_image_name}\"",
-  #       "lxc image delete ${local.output_image_name}",
-  #       "echo \"Image deletion completed\"",
-  #     ]
-  #     keep_input_artifact = false
-  #   }
-  # }
+    # Post processor for removing image from local machine after copying to remote host
+    post-processor "shell-local" {
+      inline = [
+        "echo \"Deleting local image ${local.output_image_name}\"",
+        "lxc image delete ${local.output_image_name}",
+        "echo \"Image deletion completed\"",
+      ]
+      keep_input_artifact = false
+    }
+  }
 }
