@@ -1,7 +1,7 @@
 ---
 - name: Provision Consul container image
   hosts: packer
-
+  
   vars_files:
     # Control node configuration
     - "{{ playbook_dir }}/../../../ryo-control-node/configuration/configuration.yml"

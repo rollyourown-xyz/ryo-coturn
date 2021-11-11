@@ -43,14 +43,15 @@ locals {
 ##
 
 locals {
-  build_image_os      = "ubuntu-minimal"
-  build_image_release = "focal"
-  
+  build_image_os       = "ubuntu-minimal"
+  build_image_release  = "focal"
   build_container_name = "packer-lxd-build"
 
-  build_inventory_file = "${abspath(path.root)}/playbooks/inventory.yml"
-  build_playbook_file  = "${abspath(path.root)}/playbooks/provision-coturn.yml"
-  build_extra_vars     = "host_id=${var.host_id} module_id=${local.module_id} consul_template_version=${var.consul_template_version}"
+  build_inventory_file    = "${abspath(path.root)}/playbooks/inventory.yml"
+  build_playbook_file     = "${abspath(path.root)}/playbooks/provision-coturn.yml"
+
+  build_extra_vars        = "host_id=${var.host_id} module_id=${local.module_id} consul_template_version=${var.consul_template_version}"
+  build_remote_extra_vars = "${ join("", [ "ansible_lxd_remote=", local.remote_lxd_host, " ", local.build_extra_vars ]) }"
 }
 
 ## Computed local variables
@@ -58,7 +59,9 @@ locals {
 
 # Computed parameters for the output image
 locals {
+  
   output_image_name        = "${ join("-", [ local.module_id, local.service_name, var.version ]) }"
+  
   output_image_description = "${ join(" ", [ 
       join(":", [ local.build_image_os , local.build_image_release ]),
       "image for",
@@ -73,9 +76,7 @@ locals {
 ##
 
 source "lxd" "container" {
-  image          = join(":", [ local.build_image_os , local.build_image_release ])
-  container_name = local.build_container_name
-  output_image   = local.output_image_name
+  image          = "${ join(":", [ local.build_image_os , local.build_image_release ]) }"
 
   publish_properties = {
     description = local.output_image_description
@@ -85,14 +86,33 @@ source "lxd" "container" {
 }
 
 build {
-  sources = ["source.lxd.container"]
+
+  source "lxd.container" {
+
+    ## Build locally
+    container_name = local.build_container_name
+    output_image   = local.output_image_name
+
+    ## Build on remote
+    # container_name = "${ join(":", [ local.remote_lxd_host, local.build_container_name ]) }"
+    # output_image   = "${ join(":", [ local.remote_lxd_host, local.output_image_name ]) }"
+
+  }
 
   provisioner "ansible" {
+
     inventory_file  = local.build_inventory_file
     playbook_file   = local.build_playbook_file
+
+    ## Build locally
     extra_arguments = [ "--extra-vars", local.build_extra_vars ]
+
+    ## Build on remote
+    # extra_arguments = [ "--extra-vars", local.build_remote_extra_vars ]
+
   }
-  
+
+  ## Use post-processors if build locally, comment out if build on remote
   post-processors {
 
     # Copy image to remote LXD host
@@ -116,4 +136,5 @@ build {
       keep_input_artifact = false
     }
   }
+
 }
