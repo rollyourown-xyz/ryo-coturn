@@ -11,7 +11,7 @@ helpMessage()
    echo "Flags:"
    echo -e "-n hostname \t\t\t(Mandatory) Name of the host for which to build images"
    echo -e "-v version \t\t\t(Mandatory) Version stamp to apply to images, e.g. 20210101-1"
-   echo -e "-c consul_template_version \t(Optional) Override default consul-template version to use for the coturn image, e.g. 0.27.0 (default)"
+   echo -e "-c consul_template_version \t(Optional) Override default consul-template version to use for the coturn image, e.g. 0.27.2 (default)"
    echo -e "-h \t\t\t\tPrint this help message"
    echo ""
    exit 1
@@ -25,7 +25,7 @@ errorMessage()
 }
 
 # Default consul-template version
-consul_template_version='0.27.0'
+consul_template_version='0.27.2'
 
 while getopts n:c:v:h flag
 do
