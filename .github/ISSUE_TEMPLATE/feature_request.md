@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an improvement for this project
+about: Suggest an improvement for this module
 title: '[FEATURE]'
 labels: 'enhancement'
 assignees: ''

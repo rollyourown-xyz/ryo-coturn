@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Ask us a question about this project
+about: Ask us a question about this module
 title: '[Q]'
 labels: 'question'
 assignees: ''
