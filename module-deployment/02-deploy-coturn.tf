@@ -107,7 +107,7 @@ resource "lxd_container" "coturn" {
     type = "disk"
     
     properties = {
-      source   = "/var/containers/ryo-service-proxy/tls/non-concatenated"
+      source   = "/var/containers/ryo-ingress-proxy/tls/non-concatenated"
       path     = "/etc/turn/tls"
       readonly = "true"
       shift    = "true"

@@ -45,27 +45,27 @@
     force: yes
 
 
-# Copy consul-template template file for provisioning ryo-service-proxy for coturn
+# Copy consul-template template file for provisioning ryo-ingress-proxy for coturn
 #
-- name: Copy consul-template template file for dynamic ryo-service-proxy configuration
+- name: Copy consul-template template file for dynamic ryo-ingress-proxy configuration
   copy:
     mode: 0644
     owner: root
     group: root
-    dest: /etc/consul-template/configure-service-proxy.sh.ctmpl
-    src: configure-service-proxy.sh.ctmpl
+    dest: /etc/consul-template/configure-ingress-proxy.sh.ctmpl
+    src: configure-ingress-proxy.sh.ctmpl
     force: yes
 
 
-# Copy script to execute provisioning of ryo-service-proxy for coturn
+# Copy script to execute provisioning of ryo-ingress-proxy for coturn
 #
-- name: Copy script to execute provisioning of ryo-service-proxy for coturn
+- name: Copy script to execute provisioning of ryo-ingress-proxy for coturn
   copy:
     mode: 0755
     owner: root
     group: root
-    dest: /usr/local/bin/execute-configure-service-proxy.sh
-    src: execute-configure-service-proxy.sh
+    dest: /usr/local/bin/execute-configure-ingress-proxy.sh
+    src: execute-configure-ingress-proxy.sh
     force: yes
 
 
