@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Default software versions
+consul_template_version='0.27.2'
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 helpMessage()
@@ -24,9 +27,6 @@ errorMessage()
    exit 1
 }
 
-# Default consul-template version
-consul_template_version='0.27.2'
-
 while getopts n:c:v:h flag
 do
     case "${flag}" in
@@ -44,7 +44,10 @@ then
 fi
 
 
-echo "Building images for ryo-coturn module on "$hostname""
+# Get Module ID from configuration file
+MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration.yml)"
+
+echo "Building images for "$MODULE_ID" module on "$hostname""
 echo ""
 echo "Building Coturn image"
 echo ""

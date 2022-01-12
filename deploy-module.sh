@@ -23,9 +23,6 @@ errorMessage()
    exit 1
 }
 
-# Module ID
-module_id='ryo-coturn'
-
 while getopts n:v:h flag
 do
     case "${flag}" in
@@ -41,6 +38,11 @@ then
    errorMessage
 fi
 
+# Get Module ID from configuration file
+MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration.yml)"
+
+echo "Deploying components for "$MODULE_ID" module on "$hostname""
+echo ""
 
 # Set up / switch to module workspace for host
 if [ -f ""$SCRIPT_DIR"/configuration/"$hostname"_workspace_created" ]
