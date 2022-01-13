@@ -101,13 +101,13 @@ resource "lxd_container" "coturn" {
     }
   }
 
-  ### Mount container directory for non-concatenated letsencrypt certificates (used by other containers)
+  ### Mount container directory for non-concatenated letsencrypt certificates from ryo-ingress-proxy
   device {
     name = "non-concat-certs"
     type = "disk"
     
     properties = {
-      source   = "/var/containers/ryo-ingress-proxy/tls/non-concatenated"
+      source   = "/var/containers/ryo-ingress-proxy/ingress-proxy/tls/non-concatenated"
       path     = "/etc/turn/tls"
       readonly = "true"
       shift    = "true"
