@@ -87,6 +87,7 @@ fi
 
 # Add module to deployed-modules array for "$hostname"
 if [ ! yq eval '. |= any_c(. == "$MODULE_ID")' "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml ]
+then
   yq eval -i '. += "$MODULE_ID"' "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml
 fi
 
