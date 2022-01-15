@@ -39,36 +39,36 @@ then
 fi
 
 # Get Module ID from configuration file
-MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration.yml)"
+MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/../configuration/configuration.yml)"
 
 echo "Deploying components for "$MODULE_ID" module on "$hostname""
 echo ""
 
 # Set up / switch to module workspace for host
-if [ -f ""$SCRIPT_DIR"/configuration/"$hostname"_workspace_created" ]
+if [ -f ""$SCRIPT_DIR"/../configuration/"$hostname"_workspace_created" ]
 then
    echo "Workspace for host "$hostname" already created, switching to workspace"
    echo ""
-   echo "Executing command terraform -chdir="$SCRIPT_DIR"/module-deployment workspace select $hostname"
+   echo "Executing command terraform -chdir="$SCRIPT_DIR"/../module-deployment workspace select $hostname"
    echo ""
-   terraform -chdir="$SCRIPT_DIR"/module-deployment workspace select $hostname
+   terraform -chdir="$SCRIPT_DIR"/../module-deployment workspace select $hostname
    echo ""
 else
    echo "Creating workpsace for host "$hostname" and switching to it"
    echo ""
-   echo "Executing command: terraform -chdir="$SCRIPT_DIR"/module-deployment workspace new $hostname"
+   echo "Executing command: terraform -chdir="$SCRIPT_DIR"/../module-deployment workspace new $hostname"
    echo ""
-   terraform -chdir="$SCRIPT_DIR"/module-deployment workspace new $hostname
+   terraform -chdir="$SCRIPT_DIR"/../module-deployment workspace new $hostname
    echo ""
-   touch "$SCRIPT_DIR"/configuration/"$hostname"_workspace_created
+   touch "$SCRIPT_DIR"/../configuration/"$hostname"_workspace_created
 fi
 
-echo "Executing command: terraform -chdir="$SCRIPT_DIR"/module-deployment init"
+echo "Executing command: terraform -chdir="$SCRIPT_DIR"/../module-deployment init"
 echo ""
-terraform -chdir="$SCRIPT_DIR"/module-deployment init
+terraform -chdir="$SCRIPT_DIR"/../module-deployment init
 echo ""
-echo "Executing command: terraform -chdir="$SCRIPT_DIR"/module-deployment apply -input=false -auto-approve -var \"host_id=$hostname\" -var \"image_version=$version\""
+echo "Executing command: terraform -chdir="$SCRIPT_DIR"/../module-deployment apply -input=false -auto-approve -var \"host_id=$hostname\" -var \"image_version=$version\""
 echo ""
-terraform -chdir="$SCRIPT_DIR"/module-deployment apply -input=false -auto-approve -var "host_id=$hostname" -var "image_version=$version"
+terraform -chdir="$SCRIPT_DIR"/../module-deployment apply -input=false -auto-approve -var "host_id=$hostname" -var "image_version=$version"
 echo ""
 echo "Completed"

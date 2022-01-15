@@ -37,22 +37,8 @@ then
 fi
 
 # Get Module ID from configuration file
-MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration.yml)"
+MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/../configuration/configuration.yml)"
 
-
-# Stop module containers
-########################
-
-echo ""
-echo "Stop "$MODULE_ID" containers on "$hostname""
-lxc stop "$hostname":coturn
-
-# Back up module container persistent storage
-##############################################
-
-echo ""
-echo "Backing up module container persistent storage on "$hostname""
-ansible-playbook -i "$SCRIPT_DIR"/../ryo-host/configuration/inventory_"$hostname" "$SCRIPT_DIR"/backup-restore/backup-container-storage.yml --extra-vars "host_id="$hostname""
 
 # Start module containers
 #########################
