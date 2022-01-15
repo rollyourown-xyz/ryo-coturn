@@ -72,3 +72,23 @@ echo ""
 terraform -chdir="$SCRIPT_DIR"/../module-deployment apply -input=false -auto-approve -var "host_id=$hostname" -var "image_version=$version"
 echo ""
 echo "Completed"
+
+
+# Update ryo-host deployed-modules array for "$hostname"
+
+# Get Module ID from configuration file
+MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/../configuration/configuration.yml)"
+
+# Check existence of deployed-modules file and create it not existing
+if [ ! -f "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml ]
+then
+  cp "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_TEMPLATE.yml "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml
+fi
+
+# Add module to deployed-modules array for "$hostname"
+if [ ! yq eval '. |= any_c(. == "$MODULE_ID")' "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml ]
+  yq eval -i '. += "$MODULE_ID"' "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml
+fi
+
+# Delete the null entry if it exists:
+yq eval -i 'del(.[] | select(. == null))' "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml
