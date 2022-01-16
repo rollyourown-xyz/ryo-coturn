@@ -41,6 +41,9 @@ fi
 # Get Module ID from configuration file
 MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/../configuration/configuration.yml)"
 
+# Deploy components
+###################
+
 echo "Deploying components for "$MODULE_ID" module on "$hostname""
 echo ""
 
@@ -74,22 +77,32 @@ echo ""
 echo "Completed"
 
 
-# Update ryo-host deployed-modules array for "$hostname"
+# Update ryo-host deployed-modules file for "$hostname"
+#######################################################
 
-# Get Module ID from configuration file
-MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/../configuration/configuration.yml)"
+DEPLOYED_MODULES_FILE="$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml
 
 # Check existence of deployed-modules file and create it not existing
-if [ ! -f "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml ]
-then
-  cp "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_TEMPLATE.yml "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml
+echo ""
+echo "Checking existence of deployed-modules file for "$hostname" and creating if not existing"
+
+if [ ! -f "$DEPLOYED_MODULES_FILE" ]; then
+  cp "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_TEMPLATE.yml "$DEPLOYED_MODULES_FILE"
 fi
 
-# Add module to deployed-modules array for "$hostname"
-if [ ! yq eval '. |= any_c(. == "$MODULE_ID")' "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml ]
-then
-  yq eval -i '. += "$MODULE_ID"' "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml
+
+# Add module to deployed-modules file for "$hostname"
+echo ""
+echo "Adding module to deployed-modules file for "$hostname""
+
+if [ $(yq_module_id="$MODULE_ID" yq eval '. |= any_c(. == strenv(yq_module_id))' "$DEPLOYED_MODULES_FILE") == true ]; then
+  echo ""$MODULE_ID" is already recorded in the deployed-modules_"$hostname".yml file"
+else
+  yq_module_id="$MODULE_ID" yq eval -i '. += strenv(yq_module_id)' "$DEPLOYED_MODULES_FILE"
 fi
 
-# Delete the null entry if it exists:
-yq eval -i 'del(.[] | select(. == null))' "$SCRIPT_DIR"/../../ryo-host/backup-restore/deployed-modules_"$hostname".yml
+
+# Delete the null entry if it exists
+echo ""
+echo "Deleting the null entry if it exists"
+yq eval -i 'del(.[] | select(. == null))' "$DEPLOYED_MODULES_FILE"
