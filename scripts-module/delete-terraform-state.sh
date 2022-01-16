@@ -38,9 +38,9 @@ then
 fi
 
 # Get Module ID from configuration file
-MODULE_ID="$(yq eval '.project_id' "$SCRIPT_DIR"/../configuration/configuration.yml)"
+MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/../configuration/configuration.yml)"
 
-# Delete terraform state for project on "$hostname"
+# Delete terraform state for module on "$hostname"
 echo ""
-echo "Deleting terraform state for project "$MODULE_ID" on "$hostname""
+echo "Deleting terraform state for module "$MODULE_ID" on "$hostname""
 rm -R "$SCRIPT_DIR"/../module-deployment/terraform.tfstate.d/"$hostname"/terraform.tfstate

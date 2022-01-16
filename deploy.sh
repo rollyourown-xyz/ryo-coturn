@@ -49,7 +49,7 @@ fi
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # Get Module ID from configuration file
-MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration_"$hostname".yml)"
+MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration.yml)"
 
 
 # Info
