@@ -14,6 +14,7 @@ helpMessage()
   echo "Flags:"
   echo -e "-n hostname \t\t(Mandatory) Name of the host on which to deploy the module"
   echo -e "-v version \t\t(Mandatory) Version stamp for images to deploy, e.g. 20210101-1"
+  echo -r "-r \t\t\tRestore after system failure (should only be used during a restore after system failure)"
   echo -e "-h \t\t\tPrint this help message"
   echo ""
   exit 1
@@ -30,11 +31,14 @@ errorMessage()
 # Command-line input handling
 #############################
 
-while getopts n:v:h flag
+restore="false"
+
+while getopts n:v:rh flag
 do
   case "${flag}" in
     n) hostname=${OPTARG};;
     v) version=${OPTARG};;
+    r) restore="true";;
     h) helpMessage ;;
     ?) errorMessage ;;
   esac
@@ -55,6 +59,14 @@ MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration.yml)
 # Info
 echo "rollyourown.xyz deployment script for "$MODULE_ID""
 
+
+# Update module repository
+###########################
+
+if [ $restore == false ]; then
+  echo "Refreshing module repository with git pull to ensure the current version"
+  cd "$SCRIPT_DIR" && git pull
+fi
 
 # Deploy Module
 ################
