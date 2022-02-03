@@ -4,10 +4,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 helpMessage()
 {
-  echo "backup.sh: Back up module container persistent storage from the host to the control node"
+  echo "start-module-containers.sh: Start module containers on a host server"
   echo ""
-  echo "Help: backup-module.sh"
-  echo "Usage: ./backup-module.sh -n hostname"
+  echo "Help: start-module-containers.sh"
+  echo "Usage: ./start-module-containers.sh -n hostname"
   echo "Flags:"
   echo -e "-n hostname \t\t(Mandatory) Name of the host from which to back up module container persistent storage"
   echo -e "-h \t\t\tPrint this help message"
@@ -18,7 +18,7 @@ helpMessage()
 errorMessage()
 {
   echo "Invalid option or input variables are missing"
-  echo "Use \"./backup-module.sh -h\" for help"
+  echo "Use \"./start-module-containers.sh -h\" for help"
   exit 1
 }
 
