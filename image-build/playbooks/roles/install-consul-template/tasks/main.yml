@@ -1,4 +1,7 @@
 ---
+# SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 # Download and unarchive consul-template archive (version {{ consul-template_version }})
 #
 - name: Download and unarchive consul-template v-{{ consul_template_version }}

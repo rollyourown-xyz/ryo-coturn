@@ -1,4 +1,7 @@
 ---
+# SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 - name: "Set up module-specific LXD container directories for ryo-coturn module on the host {{ host_id }}"
   hosts: host_wireguard_ip
   

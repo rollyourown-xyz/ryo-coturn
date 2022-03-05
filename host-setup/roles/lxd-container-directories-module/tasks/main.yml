@@ -1,4 +1,7 @@
 ---
+# SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 ## The generic directory /var/containers/{{ module_id }}
 ## for LXD container persistent storage must be created
 ## Further module-specific container directories should be

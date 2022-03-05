@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 # restore.sh
 # This script redeploys a module and restores a previous backup of the persistent storage for the module
 # This should only be used if necessary, e.g. after a system failure or failed upgrade.
