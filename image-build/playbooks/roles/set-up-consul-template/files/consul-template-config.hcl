@@ -23,11 +23,11 @@ template {
   command = "/usr/local/bin/restart-coturn.sh"
 }
 
-# Template for dynamic iptables configuration based on consul key-values
+# Template for dynamic nftables configuration based on consul key-values
 template {
-  source = "/etc/consul-template/iptables-rules.ctmpl"
-  destination = "/usr/local/bin/iptables-rules.sh"
-  command = "/usr/local/bin/iptables-rules.sh"
+  source = "/etc/consul-template/nftables.ctmpl"
+  destination = "/etc/nftables.conf"
+  command = "/usr/local/bin/reload-nftables.sh"
 }
 
 # Template for provisioning ryo-ingress-proxy for coturn

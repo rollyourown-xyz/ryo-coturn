@@ -36,15 +36,15 @@
     force: yes
 
 
-# Copy consul-template template file for dynamic iptables configuration based on consul key-values
+# Copy consul-template template file for dynamic nftables configuration based on consul key-values
 #
-- name: Copy consul-template template file for dynamic iptables configuration
-  template:
+- name: Copy consul-template template file for dynamic nftables configuration
+  copy:
     mode: 0644
     owner: root
     group: root
-    dest: /etc/consul-template/iptables-rules.ctmpl
-    src: iptables-rules.ctmpl.j2
+    dest: /etc/consul-template/nftables.ctmpl
+    src: nftables.ctmpl
     force: yes
 
 
