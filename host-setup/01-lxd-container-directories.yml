@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 - name: "Set up module-specific LXD container directories for ryo-coturn module on the host {{ host_id }}"
-  hosts: host_wireguard_ip
+  hosts: host_wireguard_ip6
   
   vars_files:
     # Control node configuration

@@ -15,12 +15,12 @@
 # Copy consul-template configuration file
 #
 - name: Copy consul-template configuration file
-  copy:
+  template:
     mode: 0644
     owner: root
     group: root
     dest: /etc/consul-template/consul-template-config.hcl
-    src: consul-template-config.hcl
+    src: consul-template-config.hcl.j2
     force: yes
 
 
@@ -39,12 +39,12 @@
 # Copy consul-template template file for dynamic nftables configuration based on consul key-values
 #
 - name: Copy consul-template template file for dynamic nftables configuration
-  copy:
+  template:
     mode: 0644
     owner: root
     group: root
     dest: /etc/consul-template/nftables.ctmpl
-    src: nftables.ctmpl
+    src: nftables.ctmpl.j2
     force: yes
 
 

@@ -2,7 +2,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 consul {
-  address = "127.0.0.1:8500"
+
+  {% if host_public_ipv6 == true %}address = "[::1]:8500"
+  {% else %}address = "127.0.0.1:8500"
+  {% endif %}
+  
   
   auth {
     enabled = false
