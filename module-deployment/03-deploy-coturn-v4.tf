@@ -59,7 +59,7 @@ resource "lxd_container" "coturn-v4" {
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":", var.listening_port ] )
+      listen  = join("", [ "udp:", local.lxd_host_control_ipv4_address, ":", var.listening_port ] )
       connect = join("", [ "udp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.listening_port ] )
       nat     = "yes"
     }
@@ -71,7 +71,7 @@ resource "lxd_container" "coturn-v4" {
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":", var.listening_port ] )
+      listen  = join("", [ "tcp:", local.lxd_host_control_ipv4_address, ":", var.listening_port ] )
       connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.listening_port ] )
       nat     = "yes"
     }
@@ -83,7 +83,7 @@ resource "lxd_container" "coturn-v4" {
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":", var.tls_listening_port ] )
+      listen  = join("", [ "udp:", local.lxd_host_control_ipv4_address, ":", var.tls_listening_port ] )
       connect = join("", [ "udp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.tls_listening_port ] )
       nat     = "yes"
     }
@@ -95,7 +95,7 @@ resource "lxd_container" "coturn-v4" {
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":", var.tls_listening_port ] )
+      listen  = join("", [ "tcp:", local.lxd_host_control_ipv4_address, ":", var.tls_listening_port ] )
       connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.tls_listening_port ] )
       nat     = "yes"
     }
@@ -107,7 +107,7 @@ resource "lxd_container" "coturn-v4" {
     type = "proxy"
 
     properties = {
-      listen  = join("", [ "udp:", local.lxd_host_public_ipv4_address, ":", var.min_port, "-", var.max_port ] )
+      listen  = join("", [ "udp:", local.lxd_host_control_ipv4_address, ":", var.min_port, "-", var.max_port ] )
       connect = join("", [ "udp:", local.lxd_host_network_part, ".", local.coturn_ip_addr_host_part, ":", var.min_port, "-", var.max_port ] )
       nat     = "yes"
     }
