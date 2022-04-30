@@ -13,7 +13,7 @@ This module uses [Ansible](https://www.ansible.com/), [Packer](https://www.packe
 
 ## How to Use
 
-A [rollyourown.xyz](https://rollyourown.xyz/) module contains automation code to configure, build, deploy, maintain, back up and restore a module for use by other rollyourown.xyz projects.
+A rollyourown module contains automation code to configure, build, deploy, maintain, back up and restore a module for use by other rollyourown.xyz projects.
 
 In itself, a module doesn’t provide a full end-to-end service, but rather provides a reusable building block that is used in a full rollyourown.xyz project as part of the end-to-end solution for that project.
 
@@ -21,13 +21,13 @@ A detailed description for project developers of how to use this module in a pro
 
 ## How to Collaborate
 
-We would be delighted if you would like to contribute to [rollyourown.xyz](https://rollyourown.xyz) and there are a number of ways you can collaborate on this module:
+We would be delighted if you would like to contribute to rollyourown and there are a number of ways you can collaborate on this module:
 
 - [Raising security-related issues](https://rollyourown.xyz/collaborate/security_vulnerabilities/)
 - [Contributing bug reports, feature requests and ideas](https://rollyourown.xyz/collaborate/bug_reports_feature_requests_ideas/)
 - [Improving the module](https://rollyourown.xyz/collaborate/existing_projects_and_modules/) - e.g. to provide fixes or enhancements
 
-You may also like to contribute to the wider [rollyourown.xyz](https://rollyourown.xyz/) project by, for example:
+You may also like to contribute to the wider rollyourown project by, for example:
 
 - [Contributing a new project or module](https://rollyourown.xyz/collaborate/new_projects_and_modules/)
 - [Contributing to the rollyourown.xyz website content](https://rollyourown.xyz/collaborate/website_content/) or [design](https://rollyourown.xyz/collaborate/website_design/)
@@ -40,7 +40,7 @@ Issues for this project can be submitted on [Codeberg](https://codeberg.org/) (_
 
 ## Security Vulnerabilities
 
-If you have found a security vulnerability in any [rollyourown.xyz](https://rollyourown.xyz/) service or any of the [rollyourown.xyz](https://rollyourown.xyz/) projects, modules or other repositories, please read our [security disclosure policy](https://rollyourown.xyz/collaborate/security_vulnerabilities/) and report this via our [security vulnerability report form](https://forms.rollyourown.xyz/security-vulnerability).
+If you have found a security vulnerability in any rollyourown service or any of the rollyourown projects, modules or other repositories, please read our [security disclosure policy](https://rollyourown.xyz/collaborate/security_vulnerabilities/) and report this via our [security vulnerability report form](https://forms.rollyourown.xyz/security-vulnerability).
 
 ## Repository Links
 
