@@ -5,17 +5,17 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Roll Your Own STUN/TURN Server
 
-This is a [rollyourown.xyz module](https://rollyourown.xyz/rollyourown/project_modules/) to deploy a [STUN](https://en.wikipedia.org/wiki/STUN)/[TURN](https://en.wikipedia.org/wiki/Traversal_Using_Relays_around_NAT) server using Ansible, Packer and Terraform.
+This is a [rollyourown module](https://rollyourown/rollyourown/project_modules/) to deploy a [STUN](https://en.wikipedia.org/wiki/STUN)/[TURN](https://en.wikipedia.org/wiki/Traversal_Using_Relays_around_NAT) server using Ansible, Packer and Terraform.
 
 ## Module Summary
 
-This module uses [Ansible](https://www.ansible.com/), [Packer](https://www.packer.io/) and [Terraform](https://www.terraform.io/) to deploy a [coturn](https://github.com/coturn/coturn) server as a module for other [rollyourown.xyz projects](https://rollyourown.xyz/rollyourown/projects/).
+This module uses [Ansible](https://www.ansible.com/), [Packer](https://www.packer.io/) and [Terraform](https://www.terraform.io/) to deploy a [coturn](https://github.com/coturn/coturn) server as a module for other [rollyourown projects](https://rollyourown.xyz/rollyourown/projects/).
 
 ## How to Use
 
-A rollyourown module contains automation code to configure, build, deploy, maintain, back up and restore a module for use by other rollyourown.xyz projects.
+A rollyourown module contains automation code to configure, build, deploy, maintain, back up and restore a module for use by other rollyourown projects.
 
-In itself, a module doesn’t provide a full end-to-end service, but rather provides a reusable building block that is used in a full rollyourown.xyz project as part of the end-to-end solution for that project.
+In itself, a module doesn’t provide a full end-to-end service, but rather provides a reusable building block that is used in a full rollyourown project as part of the end-to-end solution for that project.
 
 A detailed description for project developers of how to use this module in a project can be found in the [module's documentation](https://rollyourown.xyz/rollyourown/project_modules/ryo-coturn/).
 
@@ -30,8 +30,8 @@ We would be delighted if you would like to contribute to rollyourown and there a
 You may also like to contribute to the wider rollyourown project by, for example:
 
 - [Contributing a new project or module](https://rollyourown.xyz/collaborate/new_projects_and_modules/)
-- [Contributing to the rollyourown.xyz website content](https://rollyourown.xyz/collaborate/website_content/) or [design](https://rollyourown.xyz/collaborate/website_design/)
-- [Maintaining a rollyourown.xyz repository](https://rollyourown.xyz/collaborate/working_with_git/what_is_git/#project-maintainer)
+- [Contributing to the rollyourown website content](https://rollyourown.xyz/collaborate/website_content/) or [design](https://rollyourown.xyz/collaborate/website_design/)
+- [Maintaining a rollyourown repository](https://rollyourown.xyz/collaborate/working_with_git/what_is_git/#project-maintainer)
 
 Issues for this project can be submitted on [Codeberg](https://codeberg.org/) (_preferred_) or [GitHub](https://github.com/):
 
