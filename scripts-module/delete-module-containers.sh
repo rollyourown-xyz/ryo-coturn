@@ -7,7 +7,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 helpMessage()
 {
-  echo "delete-module-containers.sh: Delete the containers of a rollyourown.xyz module"
+  echo "delete-module-containers.sh: Delete the containers of a rollyourown module"
   echo ""
   echo "Help: delete-module-containerse.sh"
   echo "Usage: ./delete-module-containerse.sh -n hostname"

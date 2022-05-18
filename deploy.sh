@@ -12,7 +12,7 @@
 
 helpMessage()
 {
-  echo "deploy.sh: Deploy a rollyourown.xyz module"
+  echo "deploy.sh: Deploy a rollyourown module"
   echo "Usage: ./deploy.sh -n hostname -v version"
   echo "Flags:"
   echo -e "-n hostname \t\t(Mandatory) Name of the host on which to deploy the module"
@@ -60,7 +60,7 @@ MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration.yml)
 
 
 # Info
-echo "rollyourown.xyz deployment script for "$MODULE_ID""
+echo "rollyourown deployment script for "$MODULE_ID""
 
 
 # Update module repository

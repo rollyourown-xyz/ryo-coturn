@@ -12,7 +12,7 @@
 
 helpMessage()
 {
-  echo "upgrade.sh: Upgrade a rollyourown.xyz module"
+  echo "upgrade.sh: Upgrade a rollyourown module"
   echo "Usage: ./upgrade.sh -n hostname -v version"
   echo "Flags:"
   echo -e "-n hostname \t\t(Mandatory) Name of the host on which to upgrade the project"
@@ -56,7 +56,7 @@ MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration.yml)
 
 
 # Info
-echo "rollyourown.xyz upgrade script for "$MODULE_ID""
+echo "rollyourown upgrade script for "$MODULE_ID""
 
 
 # Update module repository
