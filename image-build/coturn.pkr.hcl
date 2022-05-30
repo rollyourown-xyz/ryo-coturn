@@ -22,6 +22,13 @@ variable "version" {
   type        = string
 }
 
+# Specify whether the image should be built remotely
+variable "remote" {
+  description = "Optional: Whether the image should be built remotely."
+  type        = bool
+  default     = false
+}
+
 # Specify the consul-template version to use in the image build
 variable "consul_template_version" {
   description = "Mandatory: The consul-template version to use in the image build."
@@ -49,7 +56,7 @@ locals {
   build_image_os      = "ubuntu-minimal"
   build_image_release = "focal"
 
-  build_container_name = "${ join(":", [ var.host_id, "packer-lxd-build" ]) }"
+  build_container_name = ( var.remote ? "${ join(":", [ var.host_id, "packer-lxd-build" ]) }" : "packer-lxd-build" )
 
   build_inventory_file    = "${abspath(path.root)}/playbooks/inventory.yml"
   build_playbook_file     = "${abspath(path.root)}/playbooks/provision-coturn.yml"
@@ -102,6 +109,6 @@ build {
   provisioner "ansible" {
     inventory_file  = local.build_inventory_file
     playbook_file   = local.build_playbook_file
-    extra_arguments = [ "-e", local.ansible_remote_argument, "--extra-vars", local.build_extra_vars ]
+    extra_arguments = ( var.remote ? [ "-e", local.ansible_remote_argument, "--extra-vars", local.build_extra_vars ] : [ "--extra-vars", local.build_extra_vars ] )
   }
 }

@@ -17,6 +17,7 @@ helpMessage()
   echo "Flags:"
   echo -e "-n hostname \t\t(Mandatory) Name of the host on which to upgrade the project"
   echo -e "-v version \t\t(Mandatory) Version stamp for images to upgrade, e.g. 20210101-1"
+  echo -e "-b remote_build \t\t(Mandatory) Whether to build images for the module remotely (true/false)"
   echo -e "-h \t\t\tPrint this help message"
   echo ""
   exit 1
@@ -33,17 +34,18 @@ errorMessage()
 # Command-line input handling
 #############################
 
-while getopts n:v:h flag
+while getopts n:v:b:h flag
 do
   case "${flag}" in
     n) hostname=${OPTARG};;
     v) version=${OPTARG};;
+    b) remote_build=${OPTARG};;
     h) helpMessage ;;
     ?) errorMessage ;;
   esac
 done
 
-if [ -z "$hostname" ] || [ -z "$version" ]; then
+if [ -z "$hostname" ] || [ -z "$version" ] || [ -z "$remote_build" ]; then
   errorMessage
 fi
 
@@ -72,7 +74,7 @@ cd "$SCRIPT_DIR" && git pull
 # Build new module images
 echo ""
 echo "Building new image(s) for "$MODULE_ID" on "$hostname""
-/bin/bash "$SCRIPT_DIR"/scripts-module/build-images.sh -n "$hostname" -v "$version"
+/bin/bash "$SCRIPT_DIR"/scripts-module/build-images.sh -n "$hostname" -v "$version" -r "$remote_build"
 
 # Deploy module containers
 echo ""
